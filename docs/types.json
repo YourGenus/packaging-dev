@@ -3,7 +3,10 @@
     {
       "id": "standard",
       "name": "Standard",
-      "parameters": { "height": 22, "diameter": 6 },
+      "description": "Default Genus form factor.",
+      "parameters": {
+        "diameter": 6
+      },
       "parts": [
         "shell",
         "insert-cartridge",
@@ -16,7 +19,10 @@
     {
       "id": "extended",
       "name": "Extended",
-      "parameters": { "height": 24, "diameter": 6 },
+      "description": "Taller variant for larger volume.",
+      "parameters": {
+        "diameter": 6
+      },
       "parts": [
         "shell",
         "insert-cartridge",
@@ -29,7 +35,10 @@
     {
       "id": "compact",
       "name": "Compact",
-      "parameters": { "height": 18, "diameter": 6 },
+      "description": "Shorter, travel-friendly form.",
+      "parameters": {
+        "diameter": 6
+      },
       "parts": [
         "shell",
         "insert-cartridge",
@@ -42,7 +51,10 @@
     {
       "id": "insert",
       "name": "Insert Only",
-      "parameters": { "height": 12, "diameter": 5 },
+      "description": "Inner PCR refill component.",
+      "parameters": {
+        "diameter": 5
+      },
       "parts": [
         "insert-cartridge",
         "insert-body",

@@ -4,8 +4,13 @@
       "id": "shell",
       "name": "Shell",
       "material": "aluminum",
+      "heightMode": "variable",
+      "heightByType": {
+        "standard": 10,
+        "extended": 12,
+        "compact": 8
+      },
       "parameters": {
-        "height": 10,
         "diameter": 6,
         "roundTop": 0.05,
         "roundBottom": 0.5
@@ -16,9 +21,10 @@
       "id": "insert-dispenser",
       "name": "Dispenser",
       "material": "pcr",
+      "heightMode": "fixed",
       "parameters": {
-        "height": 1.2,
-        "diameter": 5,
+        "height": 3,
+        "diameter": 4,
         "roundTop": 0.2,
         "roundBottom": 0
       }
@@ -28,6 +34,7 @@
       "id": "insert-body",
       "name": "Insert Body",
       "material": "pcr",
+      "heightMode": "fixed",
       "parameters": {
         "height": 5,
         "diameter": 6,
@@ -42,11 +49,13 @@
       "id": "insert-cartridge",
       "name": "Cartridge",
       "material": "pcr",
+      "heightMode": "relative",
+      "relativeTo": "shell",
+      "offset": -1,
       "parameters": {
-        "height": 4,
         "diameter": 5,
         "roundTop": 0,
-        "roundBottom": 0.05
+        "roundBottom": 1
       }
     },
 
@@ -54,6 +63,7 @@
       "id": "cap",
       "name": "Cap",
       "material": "aluminum",
+      "heightMode": "fixed",
       "parameters": {
         "height": 7,
         "diameter": 6,

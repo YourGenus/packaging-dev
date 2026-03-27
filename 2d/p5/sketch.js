@@ -43,6 +43,41 @@ function draw() {
 }
 
 // -------------------------
+// GET PART HEIGHT
+// -------------------------
+function getPartHeight(part, typeId) {
+  const p = part.parameters;
+
+  // FIXED HEIGHT
+  if (part.heightMode === "fixed") {
+    return p.height;
+  }
+
+  // SPECIAL CASE: Insert-only mode
+  if (typeId === "insert") {
+    if (part.id === "insert-cartridge") {
+      const shell = parts.parts.find(p => p.id === "shell");
+      const defaultShellHeight = shell.heightByType["standard"];
+      return defaultShellHeight - 1;
+    }
+  }
+
+  // VARIABLE HEIGHT BY TYPE
+  if (part.heightMode === "variable") {
+    return part.heightByType[typeId];
+  }
+
+  // RELATIVE HEIGHT (e.g., cartridge = shell - 1)
+  if (part.heightMode === "relative") {
+    const refPart = parts.parts.find(x => x.id === part.relativeTo);
+    const refHeight = getPartHeight(refPart, typeId);
+    return refHeight + part.offset;
+  }
+
+  return 0;
+}
+
+// -------------------------
 // DRAW BOTTLE
 // -------------------------
 function drawBottle(typeId, genreId) {
@@ -54,34 +89,13 @@ function drawBottle(typeId, genreId) {
   const colorPrimary = hexToRgb(genre.colors.primary);
   const colorSecondary = hexToRgb(genre.colors.secondary);
 
-  // --- DYNAMIC SHELL HEIGHT (only for types with shell + cap) ---
-  const shellPart = parts.parts.find(p => p.id === "shell");
-  const capPart = parts.parts.find(p => p.id === "cap");
-
-  if (shellPart && capPart && typeId !== "insert") {
-    const insertBody = parts.parts.find(p => p.id === "insert-body");
-    const insertCartridge = parts.parts.find(p => p.id === "insert-cartridge");
-    const insertDispenser = parts.parts.find(p => p.id === "insert-dispenser");
-
-    const insertTotalH =
-      insertBody.parameters.height +
-      insertCartridge.parameters.height +
-      insertDispenser.parameters.height;
-
-    const typeHeight = type.parameters.height;
-    const capH = capPart.parameters.height;
-
-    shellPart.parameters.height =
-      typeHeight - (insertTotalH + capH);
-  }
-
   // --- DRAW ---
   let y = originY;
 
   type.parts.forEach(partId => {
     const part = parts.parts.find(p => p.id === partId);
     if (part) {
-      y = drawPart(part, colorPrimary, colorSecondary, y);
+      y = drawPart(part, typeId, colorPrimary, colorSecondary, y);
     }
   });
 }
@@ -89,31 +103,46 @@ function drawBottle(typeId, genreId) {
 // -------------------------
 // DRAW INDIVIDUAL PART
 // -------------------------
-function drawPart(part, colorPrimary, colorSecondary, y) {
+function drawPart(part, typeId, colorPrimary, colorSecondary, y) {
   const p = part.parameters;
   const currentType = typeSelect.value();
 
+  const heightUnits = getPartHeight(part, typeId);
+  const height = heightUnits * s;
   const diameter = p.diameter * s;
-  const height = p.height * s;
 
   const roundTop = (p.roundTop || 0) * s;
   const roundBottom = (p.roundBottom || 0) * s;
 
+  // UNIVERSAL CENTERING (always use shell diameter)
+  const shell = parts.parts.find(p => p.id === "shell");
+  const maxDiameter = shell.parameters.diameter * s;
+  const x = originX + (maxDiameter - diameter) / 2;
+
   // -------------------------
-  // INSERT VISIBILITY RULES
+  // VISIBILITY RULES
   // -------------------------
 
-  // Cartridge + Dispenser hidden unless insert-only mode
+  // Insert-only mode hides shell + cap
+  if (currentType === "insert") {
+    if (part.id === "shell") return y;
+    if (part.id === "cap") return y;
+  }
+
+  // Normal modes hide dispenser + cartridge
   if (currentType !== "insert") {
     if (part.id === "insert-cartridge") return y;
     if (part.id === "insert-dispenser") return y;
   }
 
-  // Insert-body is ALWAYS visible in normal modes
-  // but must draw neck + body
+  // -------------------------
+  // INSERT BODY (neck + body)
+  // -------------------------
   if (part.id === "insert-body") {
     const neckD = p.neckDiameter * s;
     const neckH = p.neckHeight * s;
+
+    const neckX = originX + (maxDiameter - neckD) / 2;
 
     // MATERIAL LOOKUP
     const material = materials.materials.find(m => m.id === part.material);
@@ -129,17 +158,12 @@ function drawPart(part, colorPrimary, colorSecondary, y) {
 
     fill(...fillColor);
 
-    // Draw neck
-    rect(
-      originX + (diameter - neckD) / 2,
-      y - height,
-      neckD,
-      neckH
-    );
+    // Draw neck (centered)
+    rect(neckX, y - height, neckD, neckH);
 
-    // Draw body
+    // Draw body (centered)
     rect(
-      originX,
+      x,
       y - height + neckH,
       diameter,
       height - neckH,
@@ -153,10 +177,9 @@ function drawPart(part, colorPrimary, colorSecondary, y) {
   }
 
   // -------------------------
-  // NORMAL PART DRAWING
+  // NORMAL PART DRAWING (centered)
   // -------------------------
 
-  // MATERIAL LOOKUP
   const material = materials.materials.find(m => m.id === part.material);
   let fillColor;
 
@@ -171,7 +194,7 @@ function drawPart(part, colorPrimary, colorSecondary, y) {
   fill(...fillColor);
 
   rect(
-    originX,
+    x,
     y - height,
     diameter,
     height,
