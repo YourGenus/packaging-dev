@@ -16,7 +16,13 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(400, 700);
+  createCanvas(windowWidth, windowHeight);
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  redraw();
+}
+
 
   // --- TYPE SELECT ---
   typeSelect = createSelect();
