@@ -1,0 +1,19 @@
+{
+  "productCategories": [
+    {
+      "id": "cleanser",
+      "name": "Cleanser",
+      "description": "Daily-use liquid cleanser for face or body."
+    },
+    {
+      "id": "mist",
+      "name": "Mist",
+      "description": "Fine spray for hydration or fragrance."
+    },
+    {
+      "id": "serum",
+      "name": "Serum",
+      "description": "Concentrated formula for targeted treatment."
+    }
+  ]
+}

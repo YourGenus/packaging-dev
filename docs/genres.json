@@ -1,0 +1,54 @@
+{
+  "genres": [
+    {
+      "id": "citizen",
+      "name": "Citizen",
+      "tags": ["balanced", "universal", "everyday"],
+      "colors": {
+        "primary": "#A8A8A8",
+        "secondary": "#E0E0E0",
+        "accent": "#4A4A4A"
+      }
+    },
+    {
+      "id": "athlete",
+      "name": "Athlete",
+      "tags": ["performance", "energy"],
+      "colors": {
+        "primary": "#FF3B30",
+        "secondary": "#FFCFCB",
+        "accent": "#8A1A12"
+      }
+    },
+    {
+      "id": "dreamer",
+      "name": "Dreamer",
+      "tags": ["expressive", "soft", "imaginative"],
+      "colors": {
+        "primary": "#A78BFA",
+        "secondary": "#EDE9FE",
+        "accent": "#5B21B6"
+      }
+    },
+    {
+      "id": "metropolitan",
+      "name": "Metropolitan",
+      "tags": ["refined", "modern"],
+      "colors": {
+        "primary": "#1C1C1C",
+        "secondary": "#C0C0C0",
+        "accent": "#6A6A6A"
+      }
+    },
+    {
+      "id": "traveler",
+      "name": "Traveler",
+      "tags": ["adaptive", "durable"],
+      "colors": {
+        "primary": "#0A84FF",
+        "secondary": "#D0E7FF",
+        "accent": "#004A99"
+      }
+    }
+  ]
+}

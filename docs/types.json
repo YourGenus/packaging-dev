@@ -1,0 +1,47 @@
+{
+  "types": [
+    {
+      "id": "standard",
+      "name": "Standard",
+      "description": "Default Genus form factor.",
+      "parameters": {
+        "volume": 50,
+        "height": 22,
+        "diameter": 6
+      },
+      "parts": ["shell", "insert", "cap"]
+    },
+    {
+      "id": "extended",
+      "name": "Extended",
+      "description": "Taller variant for larger volume.",
+      "parameters": {
+        "volume": 75,
+        "height": 28,
+        "diameter": 6
+      },
+      "parts": ["shell", "insert", "cap"]
+    },
+    {
+      "id": "compact",
+      "name": "Compact",
+      "description": "Shorter, travel-friendly form.",
+      "parameters": {
+        "volume": 30,
+        "height": 16,
+        "diameter": 6
+      },
+      "parts": ["shell", "insert", "cap"]
+    },
+    {
+      "id": "insert",
+      "name": "Insert Only",
+      "description": "Inner PCR refill component.",
+      "parameters": {
+        "height": 12,
+        "diameter": 5
+      },
+      "parts": ["insert"]
+    }
+  ]
+}

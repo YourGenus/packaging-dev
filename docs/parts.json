@@ -1,0 +1,39 @@
+{
+  "parts": [
+    {
+      "id": "shell",
+      "name": "Shell",
+      "material": "Aluminum",
+      "parameters": {
+        "height": 10,
+        "diameter": 6,
+        "roundTop": 0.05,
+        "roundBottom": 0.5
+      }
+    },
+    {
+      "id": "insert",
+      "name": "Insert",
+      "material": "PCR",
+      "parameters": {
+        "height": 5,
+        "diameter": 6,
+        "neckDiameter": 5,
+        "neckHeight": 0.8,
+        "roundTop": 0.25,
+        "roundBottom": 0.05
+      }
+    },
+    {
+      "id": "cap",
+      "name": "Cap",
+      "material": "Aluminum",
+      "parameters": {
+        "height": 7,
+        "diameter": 6,
+        "roundTop": 0.5,
+        "roundBottom": 0.25
+      }
+    }
+  ]
+}
