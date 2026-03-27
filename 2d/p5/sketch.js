@@ -1,27 +1,50 @@
 let genres, parts, types;
 
+// UI elements
+let typeSelect, genreSelect;
+
 // Scale + layout
 const s = 20;
 const originX = 100;
-const originY = 600;
+const originY = 550;
 
 function preload() {
   genres = loadJSON("../../docs/genres.json");
   parts = loadJSON("../../docs/parts.json");
   types = loadJSON("../../docs/types.json");
+  materials = loadJSON("../../docs/materials.json");
 }
 
 function setup() {
   createCanvas(400, 700);
+
+  // --- TYPE SELECT ---
+  typeSelect = createSelect();
+  typeSelect.position(20, 20);
+  types.types.forEach(t => typeSelect.option(t.name, t.id));
+  typeSelect.changed(redraw);
+
+  // --- GENRE SELECT ---
+  genreSelect = createSelect();
+  genreSelect.position(200, 20);
+  genres.genres.forEach(g => genreSelect.option(g.name, g.id));
+  genreSelect.changed(redraw);
+
   noLoop();
 }
 
 function draw() {
   background(255);
 
-  drawBottle("extended", "traveler");
+  const selectedType = typeSelect.value();
+  const selectedGenre = genreSelect.value();
+
+  drawBottle(selectedType, selectedGenre);
 }
 
+// -------------------------
+// DRAW BOTTLE
+// -------------------------
 function drawBottle(typeId, genreId) {
   const type = types.types.find(t => t.id === typeId);
   const genre = genres.genres.find(g => g.id === genreId);
@@ -56,6 +79,9 @@ function drawBottle(typeId, genreId) {
   });
 }
 
+// -------------------------
+// DRAW INDIVIDUAL PART
+// -------------------------
 function drawPart(part, colorPrimary, colorSecondary, y) {
   const p = part.parameters;
 
@@ -65,27 +91,35 @@ function drawPart(part, colorPrimary, colorSecondary, y) {
   const roundTop = (p.roundTop || 0) * s;
   const roundBottom = (p.roundBottom || 0) * s;
 
-  // MATERIAL COLORS
+  // MATERIAL LOOKUP
+  const material = materials.materials.find(m => m.id === part.material);
+
   let fillColor;
 
-  if (part.material === "PCR") {
-    // PCR uses genre color
+  // PCR uses genre color
+  if (material.appearance.useGenreColor) {
     fillColor = colorSecondary;
-  } else if (part.material === "Aluminum") {
-    // Aluminum uses fixed metal color
-    fillColor = [220, 220, 220];
-  } else {
-    // fallback
+  }
+
+  // Aluminum uses its own base color
+  else if (material.appearance.baseColor) {
+    fillColor = hexToRgb(material.appearance.baseColor);
+  }
+
+  // fallback
+  else {
     fillColor = [150, 150, 150];
   }
 
   fill(...fillColor);
+
 
   // INSERT special case
   if (part.id === "insert") {
     const neckD = p.neckDiameter * s;
     const neckH = p.neckHeight * s;
 
+    // Neck
     rect(
       originX + (diameter - neckD) / 2,
       y - height,
@@ -93,6 +127,7 @@ function drawPart(part, colorPrimary, colorSecondary, y) {
       neckH
     );
 
+    // Body
     rect(
       originX,
       y - height + neckH,
@@ -105,6 +140,7 @@ function drawPart(part, colorPrimary, colorSecondary, y) {
     );
 
   } else {
+    // Normal part
     rect(
       originX,
       y - height,
@@ -120,6 +156,9 @@ function drawPart(part, colorPrimary, colorSecondary, y) {
   return y - height;
 }
 
+// -------------------------
+// HEX → RGB
+// -------------------------
 function hexToRgb(hex) {
   const bigint = parseInt(hex.replace("#", ""), 16);
   return [

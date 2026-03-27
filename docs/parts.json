@@ -3,7 +3,7 @@
     {
       "id": "shell",
       "name": "Shell",
-      "material": "Aluminum",
+      "material": "aluminum",
       "parameters": {
         "height": 10,
         "diameter": 6,
@@ -14,7 +14,7 @@
     {
       "id": "insert",
       "name": "Insert",
-      "material": "PCR",
+      "material": "pcr",
       "parameters": {
         "height": 5,
         "diameter": 6,
@@ -27,7 +27,7 @@
     {
       "id": "cap",
       "name": "Cap",
-      "material": "Aluminum",
+      "material": "aluminum",
       "parameters": {
         "height": 7,
         "diameter": 6,
