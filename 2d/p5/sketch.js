@@ -1,4 +1,4 @@
-let genres, parts, types;
+let genres, parts, types, materials;
 
 // UI elements
 let typeSelect, genreSelect;
@@ -49,24 +49,31 @@ function drawBottle(typeId, genreId) {
   const type = types.types.find(t => t.id === typeId);
   const genre = genres.genres.find(g => g.id === genreId);
 
-  if (!type || !genre) {
-    console.error("Invalid type or genre");
-    return;
-  }
+  if (!type || !genre) return;
 
   const colorPrimary = hexToRgb(genre.colors.primary);
   const colorSecondary = hexToRgb(genre.colors.secondary);
 
-  // --- DYNAMIC SHELL HEIGHT ---
+  // --- DYNAMIC SHELL HEIGHT (only for types with shell + cap) ---
   const shellPart = parts.parts.find(p => p.id === "shell");
-  const insertPart = parts.parts.find(p => p.id === "insert");
   const capPart = parts.parts.find(p => p.id === "cap");
 
-  const typeHeight = type.parameters.height;
-  const insertH = insertPart.parameters.height;
-  const capH = capPart.parameters.height;
+  if (shellPart && capPart && typeId !== "insert") {
+    const insertBody = parts.parts.find(p => p.id === "insert-body");
+    const insertCartridge = parts.parts.find(p => p.id === "insert-cartridge");
+    const insertDispenser = parts.parts.find(p => p.id === "insert-dispenser");
 
-  shellPart.parameters.height = typeHeight - (insertH + capH);
+    const insertTotalH =
+      insertBody.parameters.height +
+      insertCartridge.parameters.height +
+      insertDispenser.parameters.height;
+
+    const typeHeight = type.parameters.height;
+    const capH = capPart.parameters.height;
+
+    shellPart.parameters.height =
+      typeHeight - (insertTotalH + capH);
+  }
 
   // --- DRAW ---
   let y = originY;
@@ -84,6 +91,7 @@ function drawBottle(typeId, genreId) {
 // -------------------------
 function drawPart(part, colorPrimary, colorSecondary, y) {
   const p = part.parameters;
+  const currentType = typeSelect.value();
 
   const diameter = p.diameter * s;
   const height = p.height * s;
@@ -91,35 +99,37 @@ function drawPart(part, colorPrimary, colorSecondary, y) {
   const roundTop = (p.roundTop || 0) * s;
   const roundBottom = (p.roundBottom || 0) * s;
 
-  // MATERIAL LOOKUP
-  const material = materials.materials.find(m => m.id === part.material);
+  // -------------------------
+  // INSERT VISIBILITY RULES
+  // -------------------------
 
-  let fillColor;
-
-  // PCR uses genre color
-  if (material.appearance.useGenreColor) {
-    fillColor = colorSecondary;
+  // Cartridge + Dispenser hidden unless insert-only mode
+  if (currentType !== "insert") {
+    if (part.id === "insert-cartridge") return y;
+    if (part.id === "insert-dispenser") return y;
   }
 
-  // Aluminum uses its own base color
-  else if (material.appearance.baseColor) {
-    fillColor = hexToRgb(material.appearance.baseColor);
-  }
-
-  // fallback
-  else {
-    fillColor = [150, 150, 150];
-  }
-
-  fill(...fillColor);
-
-
-  // INSERT special case
-  if (part.id === "insert") {
+  // Insert-body is ALWAYS visible in normal modes
+  // but must draw neck + body
+  if (part.id === "insert-body") {
     const neckD = p.neckDiameter * s;
     const neckH = p.neckHeight * s;
 
-    // Neck
+    // MATERIAL LOOKUP
+    const material = materials.materials.find(m => m.id === part.material);
+    let fillColor;
+
+    if (material.appearance.useGenreColor) {
+      fillColor = colorSecondary;
+    } else if (material.appearance.baseColor) {
+      fillColor = hexToRgb(material.appearance.baseColor);
+    } else {
+      fillColor = [150, 150, 150];
+    }
+
+    fill(...fillColor);
+
+    // Draw neck
     rect(
       originX + (diameter - neckD) / 2,
       y - height,
@@ -127,7 +137,7 @@ function drawPart(part, colorPrimary, colorSecondary, y) {
       neckH
     );
 
-    // Body
+    // Draw body
     rect(
       originX,
       y - height + neckH,
@@ -139,19 +149,37 @@ function drawPart(part, colorPrimary, colorSecondary, y) {
       roundBottom
     );
 
-  } else {
-    // Normal part
-    rect(
-      originX,
-      y - height,
-      diameter,
-      height,
-      roundTop,
-      roundTop,
-      roundBottom,
-      roundBottom
-    );
+    return y - height;
   }
+
+  // -------------------------
+  // NORMAL PART DRAWING
+  // -------------------------
+
+  // MATERIAL LOOKUP
+  const material = materials.materials.find(m => m.id === part.material);
+  let fillColor;
+
+  if (material && material.appearance.useGenreColor) {
+    fillColor = colorSecondary;
+  } else if (material && material.appearance.baseColor) {
+    fillColor = hexToRgb(material.appearance.baseColor);
+  } else {
+    fillColor = [150, 150, 150];
+  }
+
+  fill(...fillColor);
+
+  rect(
+    originX,
+    y - height,
+    diameter,
+    height,
+    roundTop,
+    roundTop,
+    roundBottom,
+    roundBottom
+  );
 
   return y - height;
 }

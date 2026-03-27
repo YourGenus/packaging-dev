@@ -11,9 +11,22 @@
         "roundBottom": 0.5
       }
     },
+
     {
-      "id": "insert",
-      "name": "Insert",
+      "id": "insert-dispenser",
+      "name": "Dispenser",
+      "material": "pcr",
+      "parameters": {
+        "height": 1.2,
+        "diameter": 5,
+        "roundTop": 0.2,
+        "roundBottom": 0
+      }
+    },
+
+    {
+      "id": "insert-body",
+      "name": "Insert Body",
       "material": "pcr",
       "parameters": {
         "height": 5,
@@ -24,6 +37,19 @@
         "roundBottom": 0.05
       }
     },
+
+    {
+      "id": "insert-cartridge",
+      "name": "Cartridge",
+      "material": "pcr",
+      "parameters": {
+        "height": 4,
+        "diameter": 5,
+        "roundTop": 0,
+        "roundBottom": 0.05
+      }
+    },
+
     {
       "id": "cap",
       "name": "Cap",
