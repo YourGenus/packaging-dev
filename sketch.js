@@ -9,10 +9,10 @@ const originX = 100;
 const originY = 550;
 
 function preload() {
-  genres = loadJSON("../../docs/genres.json");
-  parts = loadJSON("../../docs/parts.json");
-  types = loadJSON("../../docs/types.json");
-  materials = loadJSON("../../docs/materials.json");
+  genres = loadJSON("/docs/genres.json");
+  parts = loadJSON("/docs/parts.json");
+  types = loadJSON("/docs/types.json");
+  materials = loadJSON("/docs/materials.json");
 }
 
 function setup() {
