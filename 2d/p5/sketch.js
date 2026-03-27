@@ -1,89 +1,130 @@
-// =========================
-// GENUS BOTTLE MODEL
-// =========================
+let genres, parts, types;
 
-// Main parameters
-let mainD = 6;             // main diameter
-let neckD = mainD - 1;     // neck diameter
-let mainRound = 0.5;       // main round
-let secondaryRound = 0.25; // secondary round
-let fitRound = 0.05;       // fit round
+// Scale + layout
+const s = 20;
+const originX = 100;
+const originY = 600;
 
-// Heights
-let capH = 7;
-let insertH = 5;
-let neckH = 0.8;           // necking height
-let shellH = 10;
-
-// Scale
-let s = 20;
+function preload() {
+  genres = loadJSON("../../docs/genres.json");
+  parts = loadJSON("../../docs/parts.json");
+  types = loadJSON("../../docs/types.json");
+}
 
 function setup() {
-  createCanvas(300, 600);
+  createCanvas(400, 700);
   noLoop();
 }
 
 function draw() {
   background(255);
 
-  const aluminum = [200, 200, 200];
-  const pcr = [255, 140, 0];
+  drawBottle("extended", "traveler");
+}
 
-  let x = 100; // left position
-  let y = 500; // bottom reference
+function drawBottle(typeId, genreId) {
+  const type = types.types.find(t => t.id === typeId);
+  const genre = genres.genres.find(g => g.id === genreId);
 
-  // -------------------------
-  // SHELL (bottom)
-  // -------------------------
-  fill(...aluminum);
-  rect(
-    x,
-    y - shellH * s,
-    mainD * s,
-    shellH * s,
-    fitRound * s,
-    fitRound * s,
-    mainRound * s,
-    mainRound * s
-  );
+  if (!type || !genre) {
+    console.error("Invalid type or genre");
+    return;
+  }
 
-  // -------------------------
-  // INSERT (middle)
-  // -------------------------
+  const colorPrimary = hexToRgb(genre.colors.primary);
+  const colorSecondary = hexToRgb(genre.colors.secondary);
 
-  // 1. Necking (top of insert)
-  fill(...pcr);
-  rect(
-    x + (mainD - neckD) * 0.5 * s,
-    y - shellH * s - insertH * s,
-    neckD * s,
-    neckH * s
-  );
+  // --- DYNAMIC SHELL HEIGHT ---
+  const shellPart = parts.parts.find(p => p.id === "shell");
+  const insertPart = parts.parts.find(p => p.id === "insert");
+  const capPart = parts.parts.find(p => p.id === "cap");
 
-  // 2. Lower insert (full diameter)
-  rect(
-    x,
-    y - shellH * s - insertH * s + neckH * s,
-    mainD * s,
-    (insertH - neckH) * s,
-    secondaryRound * s,
-    secondaryRound * s,
-    fitRound * s,
-    fitRound * s
-  );
+  const typeHeight = type.parameters.height;
+  const insertH = insertPart.parameters.height;
+  const capH = capPart.parameters.height;
 
-  // -------------------------
-  // CAP (top)
-  // -------------------------
-  fill(...aluminum);
-  rect(
-    x,
-    y - shellH * s - insertH * s - capH * s,
-    mainD * s,
-    capH * s,
-    mainRound * s,
-    mainRound * s,
-    secondaryRound * s,
-    secondaryRound * s
-  );
+  shellPart.parameters.height = typeHeight - (insertH + capH);
+
+  // --- DRAW ---
+  let y = originY;
+
+  type.parts.forEach(partId => {
+    const part = parts.parts.find(p => p.id === partId);
+    if (part) {
+      y = drawPart(part, colorPrimary, colorSecondary, y);
+    }
+  });
+}
+
+function drawPart(part, colorPrimary, colorSecondary, y) {
+  const p = part.parameters;
+
+  const diameter = p.diameter * s;
+  const height = p.height * s;
+
+  const roundTop = (p.roundTop || 0) * s;
+  const roundBottom = (p.roundBottom || 0) * s;
+
+  // MATERIAL COLORS
+  let fillColor;
+
+  if (part.material === "PCR") {
+    // PCR uses genre color
+    fillColor = colorSecondary;
+  } else if (part.material === "Aluminum") {
+    // Aluminum uses fixed metal color
+    fillColor = [220, 220, 220];
+  } else {
+    // fallback
+    fillColor = [150, 150, 150];
+  }
+
+  fill(...fillColor);
+
+  // INSERT special case
+  if (part.id === "insert") {
+    const neckD = p.neckDiameter * s;
+    const neckH = p.neckHeight * s;
+
+    rect(
+      originX + (diameter - neckD) / 2,
+      y - height,
+      neckD,
+      neckH
+    );
+
+    rect(
+      originX,
+      y - height + neckH,
+      diameter,
+      height - neckH,
+      roundTop,
+      roundTop,
+      roundBottom,
+      roundBottom
+    );
+
+  } else {
+    rect(
+      originX,
+      y - height,
+      diameter,
+      height,
+      roundTop,
+      roundTop,
+      roundBottom,
+      roundBottom
+    );
+  }
+
+  return y - height;
+}
+
+function hexToRgb(hex) {
+  const bigint = parseInt(hex.replace("#", ""), 16);
+  return [
+    (bigint >> 16) & 255,
+    (bigint >> 8) & 255,
+    bigint & 255
+  ];
 }

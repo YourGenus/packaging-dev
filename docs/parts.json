@@ -20,7 +20,7 @@
         "diameter": 6,
         "neckDiameter": 5,
         "neckHeight": 0.8,
-        "roundTop": 0.25,
+        "roundTop": 0.15,
         "roundBottom": 0.05
       }
     },
@@ -32,7 +32,7 @@
         "height": 7,
         "diameter": 6,
         "roundTop": 0.5,
-        "roundBottom": 0.25
+        "roundBottom": 0.15
       }
     }
   ]

@@ -5,9 +5,9 @@
       "name": "Citizen",
       "tags": ["balanced", "universal", "everyday"],
       "colors": {
-        "primary": "#A8A8A8",
-        "secondary": "#E0E0E0",
-        "accent": "#4A4A4A"
+        "primary": "#DCDCDC",
+        "secondary": "#DCDCDC",
+        "accent": "#DCDCDC"
       }
     },
     {
@@ -15,9 +15,9 @@
       "name": "Athlete",
       "tags": ["performance", "energy"],
       "colors": {
-        "primary": "#FF3B30",
-        "secondary": "#FFCFCB",
-        "accent": "#8A1A12"
+        "primary": "#EB631E",
+        "secondary": "#EB631E",
+        "accent": "#EB631E"
       }
     },
     {
@@ -25,9 +25,9 @@
       "name": "Dreamer",
       "tags": ["expressive", "soft", "imaginative"],
       "colors": {
-        "primary": "#A78BFA",
+        "primary": "#EDE9FE",
         "secondary": "#EDE9FE",
-        "accent": "#5B21B6"
+        "accent": "#EDE9FE"
       }
     },
     {
@@ -35,9 +35,9 @@
       "name": "Metropolitan",
       "tags": ["refined", "modern"],
       "colors": {
-        "primary": "#1C1C1C",
-        "secondary": "#C0C0C0",
-        "accent": "#6A6A6A"
+        "primary": "#223f61",
+        "secondary": "#223f61",
+        "accent": "#223f61"
       }
     },
     {
@@ -45,9 +45,9 @@
       "name": "Traveler",
       "tags": ["adaptive", "durable"],
       "colors": {
-        "primary": "#0A84FF",
-        "secondary": "#D0E7FF",
-        "accent": "#004A99"
+        "primary": "#365045",
+        "secondary": "#365045",
+        "accent": "#365045"
       }
     }
   ]

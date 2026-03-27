@@ -17,7 +17,7 @@
       "description": "Taller variant for larger volume.",
       "parameters": {
         "volume": 75,
-        "height": 28,
+        "height": 24,
         "diameter": 6
       },
       "parts": ["shell", "insert", "cap"]
@@ -28,7 +28,7 @@
       "description": "Shorter, travel-friendly form.",
       "parameters": {
         "volume": 30,
-        "height": 16,
+        "height": 18,
         "diameter": 6
       },
       "parts": ["shell", "insert", "cap"]
