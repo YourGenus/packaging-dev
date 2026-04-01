@@ -1,9 +1,9 @@
 export default function Pump({ params }) {
-  const { diameter, height, offset, color } = params
+  const { diameter, height, color } = params
   const radius = diameter / 2
 
   return (
-    <mesh position={[0, offset + height / 2, 0]}>
+    <mesh>
       <cylinderGeometry args={[radius, radius, height]} />
       <meshStandardMaterial color={color} />
     </mesh>

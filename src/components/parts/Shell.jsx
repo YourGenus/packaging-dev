@@ -1,8 +1,7 @@
 // src/components/parts/Shell.jsx
 
 export default function Shell({ params }) {
-  const { diameter, height, color } = params
-  const radius = diameter / 2
+  const { radius, height, color } = params
 
   return (
     <mesh position={[0, height / 2, 0]}>

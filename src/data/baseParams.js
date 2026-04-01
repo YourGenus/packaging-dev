@@ -3,7 +3,7 @@ export const BASE_PARAMS = {
     shell: {
       radius: 20,
       height: 80,
-      color: "#CCCCCC"
+      color: "#ff2121"
     },
 
     body: {
@@ -11,19 +11,19 @@ export const BASE_PARAMS = {
       height: 60,
       neckDiameter: 20,
       neckHeight: 10,
-      color: "#EEEEEE"
+      color: "#2bff00"
     },
 
     pump: {
       diameter: 20,
       height: 20,
-      color: "#DDDDDD"
+      color: "#001aff"
     },
 
     cap: {
       diameter: 40,
       height: 20,
-      color: "#BBBBBB"
+      color: "#fce300"
     }
   }
 }

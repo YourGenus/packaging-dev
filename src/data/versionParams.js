@@ -5,9 +5,8 @@ export const VERSION_PARAMS = {
     pump: {},
     cap: {}
   },
-  deluxe: {
+  extended: {
     shell: { height: 90 },
-    body: { height: 70 },
     pump: { color: "#222" },
     cap: { color: "#222" }
   }
