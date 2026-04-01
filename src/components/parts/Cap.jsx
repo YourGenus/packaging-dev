@@ -1,6 +1,5 @@
-// src/components/parts/Cap.jsx
 export default function Cap({ params }) {
-  const { diameter, height, color, offset } = params
+  const { diameter, height, offset, color } = params
   const radius = diameter / 2
 
   return (

@@ -1,14 +1,14 @@
 export const GENRE_STYLES = {
   CITIZEN: {
-    Pump: { color: '#E8E8E8' },
-    Body: { color: '#F5F5F5' }
+    pump: { color: "#E8E8E8" },
+    body: { color: "#F5F5F5" }
   },
   ATHLETE: {
-    Pump: { color: '#FF5500' },
-    Body: { color: '#FFFFFF' }
+    pump: { color: "#FF5500" },
+    body: { color: "#FFFFFF" }
   },
   DREAMER: {
-    Pump: { color: '#F3D1FF' },
-    Body: { color: '#FFF8FF' }
+    pump: { color: "#F3D1FF" },
+    body: { color: "#FFF8FF" }
   }
 }

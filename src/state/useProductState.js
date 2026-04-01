@@ -23,17 +23,23 @@ export function useProductState() {
 }
 
 function buildParams(category, genre, version) {
+  const categoryDef = PRODUCT_CATEGORIES[category]
+  if (!categoryDef) {
+    console.error("❌ ERROR: Category not found:", category)
+    return {}
+  }
+
   const base = BASE_PARAMS[category]
   const genreStyle = GENRE_STYLES[genre]
   const versionMods = VERSION_PARAMS[version]
 
   const result = {}
 
-  for (const part of PRODUCT_CATEGORIES[category].parts) {
+  for (const part of categoryDef.parts) {
     result[part] = {
       ...base[part],
-      ...versionMods[part],
-      ...genreStyle[part]
+      ...(versionMods[part] || {}),
+      ...(genreStyle[part] || {})
     }
   }
 

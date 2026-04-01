@@ -1,28 +1,38 @@
-import Shell from "./parts/Shell"
-import Body from "./parts/Body"
-import Cap from "./parts/Cap"
-import Pump from "./parts/Pump"
-
 import { PRODUCT_CATEGORIES } from "../data/productCategories"
-
-const PART_COMPONENTS = {
-  shell: Shell,
-  "insert-body": Body,
-  "insert-cartridge": Body, // placeholder
-  "insert-dispenser": Pump,
-  cap: Cap
-}
+import Body from "./parts/Body"
+import Pump from "./parts/Pump"
+import Cap from "./parts/Cap"
+import Shell from "./parts/Shell"
 
 export default function ProductModel({ category, params }) {
   const parts = PRODUCT_CATEGORIES[category].parts
 
+  const body = params.body
+  const pump = params.pump
+  const cap = params.cap
+
+  // Compute heights
+  const bodyTotal = body.height + body.neckHeight
+  const pumpTop = bodyTotal + pump.height
+  const capTop = pumpTop + cap.height
+
+  // Compute total height for centering
+  const totalHeight = capTop
+
   return (
-    <group>
-      {parts.map((partId) => {
-        const Part = PART_COMPONENTS[partId]
-        if (!Part) return null
-        return <Part key={partId} params={params[partId]} />
-      })}
+    <group position={[0, -totalHeight / 2, 0]}>
+      {/* Body */}
+      <Body params={body} />
+
+      {/* Pump */}
+      <group position={[0, bodyTotal + pump.height / 2, 0]}>
+        <Pump params={pump} />
+      </group>
+
+      {/* Cap */}
+      <group position={[0, pumpTop + cap.height / 2, 0]}>
+        <Cap params={cap} />
+      </group>
     </group>
   )
 }

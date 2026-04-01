@@ -1,14 +1,14 @@
 export const VERSION_PARAMS = {
   standard: {
-    Shell: { height: 80 },
-    Body: { height: 60 }
+    shell: {},
+    body: {},
+    pump: {},
+    cap: {}
   },
-  extended: {
-    Shell: { height: 100 },
-    Body: { height: 60 }
-  },
-  compact: {
-    Shell: { height: 60 },
-    Body: { height: 60 }
+  deluxe: {
+    shell: { height: 90 },
+    body: { height: 70 },
+    pump: { color: "#222" },
+    cap: { color: "#222" }
   }
 }

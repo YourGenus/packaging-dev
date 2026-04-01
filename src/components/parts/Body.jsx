@@ -1,6 +1,3 @@
-// src/components/parts/Body.jsx
-import { useMemo } from 'react'
-
 export default function Body({ params }) {
   const { diameter, height, neckDiameter, neckHeight, color } = params
 
@@ -9,15 +6,15 @@ export default function Body({ params }) {
 
   return (
     <group>
-      {/* Neck */}
-      <mesh position={[0, height / 2 - neckHeight / 2, 0]}>
-        <cylinderGeometry args={[neckRadius, neckRadius, neckHeight]} />
+      {/* Main body */}
+      <mesh position={[0, height / 2, 0]}>
+        <cylinderGeometry args={[radius, radius, height]} />
         <meshStandardMaterial color={color} />
       </mesh>
 
-      {/* Main Body */}
-      <mesh position={[0, (height - neckHeight) / 2 - height / 2, 0]}>
-        <cylinderGeometry args={[radius, radius, height - neckHeight]} />
+      {/* Neck */}
+      <mesh position={[0, height + neckHeight / 2, 0]}>
+        <cylinderGeometry args={[neckRadius, neckRadius, neckHeight]} />
         <meshStandardMaterial color={color} />
       </mesh>
     </group>
