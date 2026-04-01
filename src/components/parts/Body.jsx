@@ -4,8 +4,10 @@ export default function Body({ params }) {
   const radius = diameter / 2
   const neckRadius = neckDiameter / 2
 
+  const totalHeight = height + neckHeight
+
   return (
-    <group>
+    <group position={[0, -totalHeight / 2, 0]}>
       {/* Main body */}
       <mesh position={[0, height / 2, 0]}>
         <cylinderGeometry args={[radius, radius, height]} />

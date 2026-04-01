@@ -1,43 +1,45 @@
-import { PRODUCT_CATEGORIES } from "../data/productCategories"
 import Body from "./parts/Body"
 import Pump from "./parts/Pump"
 import Cap from "./parts/Cap"
 import Shell from "./parts/Shell"
 
 export default function ProductModel({ category, params }) {
+  const shell = params.shell
   const body = params.body
   const pump = params.pump
   const cap = params.cap
-  const shell = params.shell
 
-  // Heights
+  // Total heights
+  const bodyTotal = body.height + body.neckHeight
+
+  // Stack positions
   const shellTop = shell.height
-  const bodyTop = shellTop + body.height + body.neckHeight
+  const bodyTop = shellTop + bodyTotal
   const pumpTop = bodyTop + pump.height
   const capTop = pumpTop + cap.height
 
-  // Total height for centering
+  // Centering
   const totalHeight = capTop
 
   return (
     <group position={[0, -totalHeight / 2, 0]}>
 
-      {/* Shell (bottom part) */}
+      {/* Shell */}
       <group position={[0, shell.height / 2, 0]}>
         <Shell params={shell} />
       </group>
 
-      {/* Body sits on top of shell */}
-      <group position={[0, shellTop + body.height / 2, 0]}>
+      {/* Body */}
+      <group position={[0, shellTop + bodyTotal / 2, 0]}>
         <Body params={body} />
       </group>
 
-      {/* Pump sits on top of body + neck */}
+      {/* Pump */}
       <group position={[0, bodyTop + pump.height / 2, 0]}>
         <Pump params={pump} />
       </group>
 
-      {/* Cap sits on top of pump */}
+      {/* Cap */}
       <group position={[0, pumpTop + cap.height / 2, 0]}>
         <Cap params={cap} />
       </group>

@@ -1,29 +1,29 @@
 export const BASE_PARAMS = {
   Cleanser: {
     shell: {
-      radius: 20,
+      diameter: 40,
       height: 80,
-      color: "#ff2121"
+      color: "#EEEEEE"
     },
 
     body: {
-      diameter: 36,        // radius * 2
-      height: 60,
-      neckDiameter: 20,
-      neckHeight: 10,
-      color: "#2bff00"
+      diameter: 36,
+      height: 20,
+      neckDiameter: 30,
+      neckHeight: 6,
+      color: "#EEEEEE"
     },
 
     pump: {
       diameter: 20,
-      height: 20,
-      color: "#001aff"
+      height: 10,
+      color: "#EEEEEE"
     },
 
     cap: {
       diameter: 40,
       height: 20,
-      color: "#fce300"
+      color: "#EEEEEE"
     }
   }
 }
