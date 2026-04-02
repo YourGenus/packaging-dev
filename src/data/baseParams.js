@@ -27,7 +27,7 @@ export const BASE_PARAMS = {
 
     cap: {
       diameter: 40,
-      height: 30,
+      height: 40,
       color: "#EEEEEE",
       topFillet: 2,
       bottomFillet: 1,

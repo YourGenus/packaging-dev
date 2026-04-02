@@ -5,7 +5,7 @@ import ProductModel from "./ProductModel"
 export default function Canvas3D({ category, params }) {
   return (
     <Canvas
-      camera={{ position: [0, 0, 600], fov: 20 }}
+      camera={{ position: [0, -20, 680], fov: 14 }}
       shadows
     >
       {/* Ambient fill */}
@@ -13,18 +13,24 @@ export default function Canvas3D({ category, params }) {
 
       {/* Key light from the left */}
       <directionalLight
-        position={[-100, 150, 200]}
-        intensity={1.5}
+        position={[-300, 120, 150]}
+        intensity={2}
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
       />
 
-      {/* Rim/fill light */}
       <directionalLight
-        position={[100, 50, 100]}
+        position={[120, 40, 120]}
         intensity={0.5}
       />
+
+      {/* Rim/fill light */}
+      <directionalLight
+        position={[0, 100, -150]}
+        intensity={0.8}
+      />
+
 
       {/* Ground shadow plane */}
       <mesh

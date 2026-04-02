@@ -15,6 +15,11 @@ export default function Cap({ params }) {
   const pts = []
 
   //
+  // *** ADD: bottom center point to close bottom ***
+  //
+  pts.push(new THREE.Vector2(0, -h2))
+
+  //
   // BOTTOM OUTER FILLET (convex, tangent to bottom + wall)
   //
   {
@@ -23,8 +28,8 @@ export default function Cap({ params }) {
 
     // Sweep from bottom → wall (270° → 360°)
     for (let i = 0; i <= 16; i++) {
-      const t = (i / 16) * (Math.PI / 2) // 0 → 90
-      const angle = (3 * Math.PI) / 2 + t // 270 → 360
+      const t = (i / 16) * (Math.PI / 2)
+      const angle = (3 * Math.PI) / 2 + t
       const x = cx + Math.cos(angle) * bottomFillet
       const y = cy + Math.sin(angle) * bottomFillet
       pts.push(new THREE.Vector2(x, y))
@@ -37,7 +42,7 @@ export default function Cap({ params }) {
   pts.push(new THREE.Vector2(radius, h2 - topFillet))
 
   //
-  // TOP ROUNDED CORNER (quarter circle, tangent to side + top)
+  // TOP OUTER FILLET (convex, tangent to wall + top)
   //
   {
     const cx = radius - topFillet
@@ -45,7 +50,7 @@ export default function Cap({ params }) {
 
     // from side → top center
     for (let i = 0; i <= 16; i++) {
-      const t = (i / 16) * (Math.PI / 2) // 0 → 90°
+      const t = (i / 16) * (Math.PI / 2)
       const x = cx + Math.cos(t) * topFillet
       const y = cy + Math.sin(t) * topFillet
       pts.push(new THREE.Vector2(x, y))
@@ -56,7 +61,6 @@ export default function Cap({ params }) {
   // *** ADD: top center point to close top ***
   //
   pts.push(new THREE.Vector2(0, h2))
-
 
   const geometry = new THREE.LatheGeometry(pts, 64)
 
