@@ -3,9 +3,13 @@ export default function Shell({ params }) {
   const radius = diameter / 2
 
   return (
-    <mesh>
+    <mesh castShadow>
       <cylinderGeometry args={[radius, radius, height]} />
-      <meshStandardMaterial color={color} />
+      <meshStandardMaterial
+        color={color}
+        metalness={0.9}
+        roughness={0.6}
+      />
     </mesh>
   )
 }
