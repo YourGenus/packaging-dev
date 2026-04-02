@@ -21,7 +21,7 @@ export default function Canvas3D({ category, params }) {
       />
 
       <directionalLight
-        position={[120, 40, 120]}
+        position={[120, -40, 120]}
         intensity={0.5}
       />
 
