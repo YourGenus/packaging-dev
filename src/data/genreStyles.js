@@ -4,7 +4,7 @@ export const GENRE_STYLES = {
     body: { color: "#c7c7c7" }
   },
   ATHLETE: {
-    pump: { color: "#FF5500" },
+    pump: { color: "#eb8d01" },
     body: { color: "#ff9900" }
   },
   DREAMER: {
