@@ -6,6 +6,6 @@ export const VERSION_PARAMS = {
     cap: {}
   },
   extended: {
-    shell: { height: 90 },
+    shell: { height: 75 },
   }
 }

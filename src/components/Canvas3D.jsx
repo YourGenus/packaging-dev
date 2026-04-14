@@ -1,52 +1,60 @@
 import { Canvas } from "@react-three/fiber"
-import { OrbitControls, Environment } from "@react-three/drei"
+import { OrbitControls, Environment, ContactShadows } from "@react-three/drei"
+import * as THREE from "three"
 import ProductModel from "./ProductModel"
 
 export default function Canvas3D({ category, params }) {
   return (
     <Canvas
-      camera={{ position: [0, -20, 680], fov: 14 }}
+      camera={{ position: [0, 40, 960], fov: 16 }}
       shadows
     >
-      {/* Ambient fill */}
-      <ambientLight intensity={0.4} />
+      {/* Global ambient fill */}
+      <ambientLight intensity={1} />
 
-      {/* Key light from the left */}
+      {/* Main key light */}
       <directionalLight
-        position={[-300, 120, 150]}
-        intensity={2}
+        position={[-200, 40, 200]}   // lower angle
+        intensity={1}
         castShadow
-        shadow-mapSize-width={2048}
-        shadow-mapSize-height={2048}
+        shadow-mapSize-width={4096}
+        shadow-mapSize-height={4096}
+        shadow-normalBias={0.2}
       />
 
+
+      {/* Rim light */}
       <directionalLight
-        position={[120, -40, 120]}
+        position={[-200, 150, -200]}
         intensity={0.5}
       />
 
-      {/* Rim/fill light */}
-      <directionalLight
-        position={[0, 100, -150]}
-        intensity={0.8}
+      {/* Soft contact shadow under product */}
+      <ContactShadows
+        position={[-2, 0, 1]}
+        opacity={0.2}
+        width={40}
+        height={40}
+        blur={3}
+        far={500}
       />
 
-
-      {/* Ground shadow plane */}
-      <mesh
-        rotation={[-Math.PI / 2, 0, 0]}
-        position={[0, -200, 0]}
-        receiveShadow
-      >
-        <planeGeometry args={[2000, 2000]} />
-        <shadowMaterial opacity={0.25} />
+      {/* Curved cyclorama background */}
+      <mesh position={[0, -200, -800]} receiveShadow>
+        <sphereGeometry args={[2000, 64, 64]} />
+        <meshStandardMaterial
+          color="#eeeeee"
+          side={THREE.BackSide}
+        />
       </mesh>
 
+      {/* Your product */}
       <ProductModel category={category} params={params} />
 
       <OrbitControls target={[0, 0, 0]} />
 
-      <Environment preset="city" />
+      {/* Studio HDRI */}
+      <Environment preset="studio" environmentIntensity={0.6} />
     </Canvas>
   )
 }

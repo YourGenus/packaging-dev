@@ -68,7 +68,7 @@ export default function Cap({ params }) {
     <mesh castShadow geometry={geometry}>
       <meshStandardMaterial
         color={color}
-        metalness={0.9}
+        metalness={0.6}
         roughness={0.6}
       />
     </mesh>
