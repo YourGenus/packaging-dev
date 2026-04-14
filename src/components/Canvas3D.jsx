@@ -10,12 +10,12 @@ export default function Canvas3D({ category, params }) {
       shadows
     >
       {/* Global ambient fill */}
-      <ambientLight intensity={1} />
+      <ambientLight intensity={0.6} />
 
       {/* Main key light */}
       <directionalLight
-        position={[-200, 40, 200]}   // lower angle
-        intensity={1}
+        position={[-200, 40, 200]}
+        intensity={0.8}
         castShadow
         shadow-mapSize-width={4096}
         shadow-mapSize-height={4096}
@@ -26,7 +26,7 @@ export default function Canvas3D({ category, params }) {
       {/* Rim light */}
       <directionalLight
         position={[-200, 150, -200]}
-        intensity={0.5}
+        intensity={0.3}
       />
 
       {/* Soft contact shadow under product */}
@@ -54,7 +54,7 @@ export default function Canvas3D({ category, params }) {
       <OrbitControls target={[0, 0, 0]} />
 
       {/* Studio HDRI */}
-      <Environment preset="studio" environmentIntensity={0.6} />
+      <Environment preset="studio" environmentIntensity={0.5} />
     </Canvas>
   )
 }
