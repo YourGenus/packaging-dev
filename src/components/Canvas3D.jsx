@@ -6,7 +6,7 @@ import ProductModel from "./ProductModel"
 export default function Canvas3D({ category, params }) {
   return (
     <Canvas
-      camera={{ position: [0, 40, 960], fov: 16 }}
+      camera={{ position: [0, 50, 760], fov: 16 }}
       shadows
     >
       {/* Global ambient fill */}
@@ -51,7 +51,7 @@ export default function Canvas3D({ category, params }) {
       {/* Your product */}
       <ProductModel category={category} params={params} />
 
-      <OrbitControls target={[0, 0, 0]} />
+      <OrbitControls target={[0, 50, 0]} />
 
       {/* Studio HDRI */}
       <Environment preset="studio" environmentIntensity={0.5} />
